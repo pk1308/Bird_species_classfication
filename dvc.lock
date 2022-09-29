@@ -7,8 +7,8 @@ stages:
       md5: c1b7101e6a42076e3e0780ae7ff2ce1c
       size: 429
     - path: src/BirdClassifier/pipeline/stage_01_data_ingestion.py
-      md5: 2db68f2d9d7893fb9496d5aa3a2b1c4b
-      size: 717
+      md5: 5777a62898302c99d13107456c558388
+      size: 708
     outs:
     - path: artifacts/data_ingestion/
       md5: 2e13a1b1534c2ff99f610e46450ca16b.dir
@@ -34,7 +34,7 @@ stages:
         LEARNING_RATE: 0.01
         WEIGHTS: imagenet
     outs:
-    - path: artifacts/prepare_base_model
-      md5: 2705af17a8903c562be305236bcebc98.dir
+    - path: artifacts/prepare_base_model/
+      md5: 11f93ce1b27a1f8dc203a1a0fce1c8e3.dir
       size: 157995512
       nfiles: 2
