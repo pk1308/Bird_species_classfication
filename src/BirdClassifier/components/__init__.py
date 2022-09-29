@@ -1,0 +1,1 @@
+from BirdClassifier.components.data_ingestion import DataIngestion

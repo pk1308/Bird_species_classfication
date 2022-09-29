@@ -1,7 +1,7 @@
 import os
 from box.exceptions import BoxValueError
 import yaml
-from deepClassifier.logger import logger
+from BirdClassifier.logger import logger
 import json
 import joblib
 from ensure import ensure_annotations
