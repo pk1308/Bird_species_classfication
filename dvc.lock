@@ -1,0 +1,16 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/BirdClassifier/pipeline/stage_01_data_ingestion.py
+    deps:
+    - path: configs/config.yaml
+      md5: 389a30a8504784eb17cb672c17e2a97d
+      size: 226
+    - path: src/BirdClassifier/pipeline/stage_01_data_ingestion.py
+      md5: 2db68f2d9d7893fb9496d5aa3a2b1c4b
+      size: 717
+    outs:
+    - path: artifacts/data_ingestion/
+      md5: 2e13a1b1534c2ff99f610e46450ca16b.dir
+      size: 3233488476
+      nfiles: 62401
