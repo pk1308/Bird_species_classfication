@@ -19,4 +19,4 @@ stages:
       - WEIGHTS
       - LEARNING_RATE
     outs:
-      - artifacts/prepare_base_model
+      - artifacts/prepare_base_model/
