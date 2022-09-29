@@ -1,1 +1,2 @@
 from BirdClassifier.components.data_ingestion import DataIngestion
+from BirdClassifier.components.prepare_base_model import PrepareBaseModel
