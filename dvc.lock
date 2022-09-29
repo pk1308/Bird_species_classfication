@@ -4,8 +4,8 @@ stages:
     cmd: python src/BirdClassifier/pipeline/stage_01_data_ingestion.py
     deps:
     - path: configs/config.yaml
-      md5: 389a30a8504784eb17cb672c17e2a97d
-      size: 226
+      md5: c1b7101e6a42076e3e0780ae7ff2ce1c
+      size: 429
     - path: src/BirdClassifier/pipeline/stage_01_data_ingestion.py
       md5: 2db68f2d9d7893fb9496d5aa3a2b1c4b
       size: 717
@@ -14,3 +14,27 @@ stages:
       md5: 2e13a1b1534c2ff99f610e46450ca16b.dir
       size: 3233488476
       nfiles: 62401
+  prepare_base_model:
+    cmd: python src/BirdClassifier/pipeline/stage_02_prepare_base_model.py
+    deps:
+    - path: configs/config.yaml
+      md5: c1b7101e6a42076e3e0780ae7ff2ce1c
+      size: 429
+    - path: src/BirdClassifier/pipeline/stage_02_prepare_base_model.py
+      md5: 48575c2dc8f5824c86860517946d7990
+      size: 781
+    params:
+      params.yaml:
+        CLASSES: 400
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+        INCLUDE_TOP: false
+        LEARNING_RATE: 0.01
+        WEIGHTS: imagenet
+    outs:
+    - path: artifacts/prepare_base_model
+      md5: 2705af17a8903c562be305236bcebc98.dir
+      size: 157995512
+      nfiles: 2
