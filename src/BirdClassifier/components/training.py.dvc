@@ -1,0 +1,4 @@
+outs:
+- md5: 10df06cafeb142d586f4ffa3f0fc3ffd
+  size: 4055
+  path: training.py

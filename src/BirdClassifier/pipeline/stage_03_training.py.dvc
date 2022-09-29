@@ -1,0 +1,4 @@
+outs:
+- md5: a081a1ba3f4e8e25d739390145d93e76
+  size: 971
+  path: stage_03_training.py

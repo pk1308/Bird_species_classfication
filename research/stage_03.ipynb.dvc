@@ -1,0 +1,4 @@
+outs:
+- md5: aa53c8d6b48e8310a352a087671263d6
+  size: 5898
+  path: stage_03.ipynb
