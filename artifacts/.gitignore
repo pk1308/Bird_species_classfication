@@ -1,4 +1,6 @@
 /data_ingestion
 /prepare_base_model
-/evaluation
+/prepare_base_model
+/prepare_callbacks
 /training
+/evaluation/model_dir

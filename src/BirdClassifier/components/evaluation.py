@@ -62,13 +62,13 @@ class Evaluation:
         s3_model_result = self.result.s3_best_model_score
         local_model_result = self.result.local_model_score
         if s3_model_result is None:
-            upload_file(file_name=self.train_model_path, object_name="Best_model")
+            upload_file(file_name=str(self.train_model_path), object_name="Best_model")
         elif local_model_result.accuracy > s3_model_result.accuracy:
             self.best_model = self.model
-            upload_file(file_name=self.train_model_path, object_name="Best_model")
-            upload_file(file_name=self.best_model_path, object_name=f"{self.timestamp}_model")
+            upload_file(file_name=str(self.train_model_path) , object_name="Best_model")
+            upload_file(file_name=str(self.best_model_path), object_name=f"{self.timestamp}_model")
         else:
-            upload_file(file_name=self.train_model_path, object_name=f"{self.timestamp}_model")
+            upload_file(file_name=str(self.train_model_path), object_name=f"{self.timestamp}_model")
 
     def log_into_mlflow(self):
         mlflow.set_registry_uri(self.config.mlflow_uri)
