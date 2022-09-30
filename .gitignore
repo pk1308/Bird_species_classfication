@@ -130,3 +130,7 @@ dmypy.json
 
 .vscode/
 .idea/
+
+artifacts/prepare_callbacks
+src/BirdClassifier/utils/mflow_backend.sh
+research/bot03.ipynb

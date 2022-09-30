@@ -1,8 +1,12 @@
-from BirdClassifier.logger import logger
-from BirdClassifier.entity import DataIngestionConfig, PrepareBaseModelConfig
-from BirdClassifier.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
-from BirdClassifier.utils import read_yaml, create_directories
+import os
 from pathlib import Path
+
+from BirdClassifier.constants import CONFIG_FILE_PATH, PARAMS_FILE_PATH
+from BirdClassifier.entity import (DataIngestionConfig, EvaluationConfig,
+                                   PrepareBaseModelConfig,
+                                   PrepareCallbacksConfig, TrainingConfig)
+from BirdClassifier.logger import logger
+from BirdClassifier.utils import create_directories, read_yaml
 
 
 class ConfigurationManager:
@@ -45,3 +49,53 @@ class ConfigurationManager:
             params_classes=self.params.CLASSES,
         )
         return prepare_base_model_config
+
+    def get_prepare_callbacks_config(self) -> PrepareCallbacksConfig:
+        config = self.config.prepare_callbacks
+        model_checkpoint_dir = os.path.dirname(config.checkpoint_model_filepath)
+        create_directories([config.tensorboard_root_log_dir, model_checkpoint_dir])
+        prepare_callback_config = PrepareCallbacksConfig(
+            root_dir=Path(config.root_dir),
+            tensorboard_root_log_dir=Path(config.tensorboard_root_log_dir),
+            checkpoint_model_filepath=Path(config.checkpoint_model_filepath),
+            early_stopping_patience=self.params.EARLY_STOPPING_PATIENCE,
+            early_stopping__monitor=self.params.EARLY_STOPPING_MONITOR,
+        )
+        return prepare_callback_config
+
+    def get_training_config(self) -> TrainingConfig:
+        training = self.config.training
+        prepare_base_model = self.config.prepare_base_model
+        params = self.params
+        create_directories([Path(training.root_dir)])
+
+        training_config = TrainingConfig(
+            root_dir=Path(training.root_dir),
+            trained_model_path=training.trained_model_path,
+            updated_base_model_path=Path(prepare_base_model.updated_base_model_path),
+            training_data=training.training_data_dir,
+            validation_data=training.validation_data_dir,
+            params_epochs=params.EPOCHS,
+            params_batch_size=params.BATCH_SIZE,
+            params_is_augmentation=params.AUGMENTATION,
+            params_image_size=params.IMAGE_SIZE,
+        )
+        return training_config
+
+    def get_validation_config(self) -> EvaluationConfig:
+
+        eval = self.config.evaluation
+        params = self.params
+        create_directories([eval.evaluation_model_dir, eval.score_dir])
+        eval_config = EvaluationConfig(
+            path_of_model=eval.path_of_model,
+            test_data=eval.test_data,
+            score_dir=eval.score_dir,
+            evaluation_model_dir=eval.evaluation_model_dir,
+            best_model_path=eval.best_model_path,
+            mlflow_uri=eval.mlflow_uri,
+            all_params=params,
+            params_image_size=params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE,
+        )
+        return eval_config

@@ -4,11 +4,11 @@ stages:
     cmd: python src/BirdClassifier/pipeline/stage_01_data_ingestion.py
     deps:
     - path: configs/config.yaml
-      md5: c1b7101e6a42076e3e0780ae7ff2ce1c
-      size: 429
+      md5: 39bbc07d1a3f6cb4ab7e3e80da491a01
+      size: 853
     - path: src/BirdClassifier/pipeline/stage_01_data_ingestion.py
-      md5: 5777a62898302c99d13107456c558388
-      size: 708
+      md5: 65a11a8da17e0dbc78a306643b08b83a
+      size: 707
     outs:
     - path: artifacts/data_ingestion/
       md5: 2e13a1b1534c2ff99f610e46450ca16b.dir
@@ -18,8 +18,8 @@ stages:
     cmd: python src/BirdClassifier/pipeline/stage_02_prepare_base_model.py
     deps:
     - path: configs/config.yaml
-      md5: c1b7101e6a42076e3e0780ae7ff2ce1c
-      size: 429
+      md5: 39bbc07d1a3f6cb4ab7e3e80da491a01
+      size: 853
     - path: src/BirdClassifier/pipeline/stage_02_prepare_base_model.py
       md5: 48575c2dc8f5824c86860517946d7990
       size: 781
@@ -35,6 +35,6 @@ stages:
         WEIGHTS: imagenet
     outs:
     - path: artifacts/prepare_base_model/
-      md5: 11f93ce1b27a1f8dc203a1a0fce1c8e3.dir
-      size: 157995512
+      md5: 7ef59f1f9223d5a6875c1158280d8cbd.dir
+      size: 118673880
       nfiles: 2

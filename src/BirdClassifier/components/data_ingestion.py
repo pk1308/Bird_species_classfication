@@ -1,8 +1,9 @@
 import os
-from zipfile import ZipFile
 import subprocess
-from BirdClassifier.logger import logger
+from zipfile import ZipFile
+
 from BirdClassifier.entity import DataIngestionConfig
+from BirdClassifier.logger import logger
 
 
 class DataIngestion:
