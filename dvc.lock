@@ -4,8 +4,8 @@ stages:
     cmd: python src/BirdClassifier/pipeline/stage_01_data_ingestion.py
     deps:
     - path: configs/config.yaml
-      md5: 39bbc07d1a3f6cb4ab7e3e80da491a01
-      size: 853
+      md5: 68411b548c0275f50a652e981a70b72d
+      size: 1237
     - path: src/BirdClassifier/pipeline/stage_01_data_ingestion.py
       md5: 65a11a8da17e0dbc78a306643b08b83a
       size: 707
@@ -18,8 +18,8 @@ stages:
     cmd: python src/BirdClassifier/pipeline/stage_02_prepare_base_model.py
     deps:
     - path: configs/config.yaml
-      md5: 39bbc07d1a3f6cb4ab7e3e80da491a01
-      size: 853
+      md5: 68411b548c0275f50a652e981a70b72d
+      size: 1237
     - path: src/BirdClassifier/pipeline/stage_02_prepare_base_model.py
       md5: 48575c2dc8f5824c86860517946d7990
       size: 781
@@ -35,6 +35,71 @@ stages:
         WEIGHTS: imagenet
     outs:
     - path: artifacts/prepare_base_model/
-      md5: 7ef59f1f9223d5a6875c1158280d8cbd.dir
+      md5: f74c6a78f52ddbb8bf3654a6a8ed3380.dir
       size: 118673880
       nfiles: 2
+  training:
+    cmd: python src/BirdClassifier/pipeline/stage_03_training.py
+    deps:
+    - path: artifacts/data_ingestion/test
+      md5: 83f7b8bb566d689d75ec690cddb174df.dir
+      size: 45048283
+      nfiles: 2000
+    - path: artifacts/data_ingestion/valid
+      md5: 16b2be8d0429726b22fdeefc2f9cb964.dir
+      size: 44918653
+      nfiles: 2000
+    - path: artifacts/prepare_base_model
+      md5: f74c6a78f52ddbb8bf3654a6a8ed3380.dir
+      size: 118673880
+      nfiles: 2
+    - path: configs/config.yaml
+      md5: 68411b548c0275f50a652e981a70b72d
+      size: 1237
+    - path: src/BirdClassifier/components/training.py
+      md5: 64a1cb0f3d8a896a50a77f3e800b7fc7
+      size: 4016
+    - path: src/BirdClassifier/pipeline/stage_03_training.py
+      md5: a081a1ba3f4e8e25d739390145d93e76
+      size: 971
+    params:
+      params.yaml:
+        AUGMENTATION: true
+        BATCH_SIZE: 32
+        EPOCHS: 50
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/training/model.h5
+      md5: d5d1dc2adf6f84e45539294c73c6bb3d
+      size: 61401936
+  evaluation:
+    cmd: python src/BirdClassifier/pipeline/stage_04_evaluation.py
+    deps:
+    - path: artifacts/data_ingestion/test
+      md5: 83f7b8bb566d689d75ec690cddb174df.dir
+      size: 45048283
+      nfiles: 2000
+    - path: artifacts/training/model.h5
+      md5: d5d1dc2adf6f84e45539294c73c6bb3d
+      size: 61401936
+    - path: configs/config.yaml
+      md5: 68411b548c0275f50a652e981a70b72d
+      size: 1237
+    - path: src/BirdClassifier/pipeline/stage_04_evaluation.py
+      md5: 0ebe31445630c0ea7cb9b06a818cbff8
+      size: 657
+    params:
+      params.yaml:
+        BATCH_SIZE: 32
+        IMAGE_SIZE:
+        - 224
+        - 224
+        - 3
+    outs:
+    - path: artifacts/evaluation/scores
+      md5: a1a6888ec805f5be75f18eab900bed83.dir
+      size: 222
+      nfiles: 1
