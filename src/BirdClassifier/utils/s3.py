@@ -72,35 +72,6 @@ def create_bucket(bucket_name, region=None):
     return True
 
 
-def upload_file(
-    file_name: Path,
-    bucket: str = "projectbirdclassifier" ,
-    object_name: str = None):
-    """Upload a file to an S3 bucket
-
-    :param file_name: File to upload
-    :param bucket: Bucket to upload to
-    :param object_name: S3 object name. If not specified then file_name is used
-    :param  extra_id : dict = {'Tagging': None}
-    :return: True if file was uploaded, else False
-    """
-    session = boto3.Session(
-        aws_access_key_id=os.environ["AWSAccessKeyId"],
-        aws_secret_access_key=os.environ["AWSSecretKey"],
-    )
-    s3 = session.resource("s3")
-    s3_client = s3.Bucket(bucket)
-
-    # If S3 object_name was not specified, use file_name
-    if object_name is None:
-        object_name = os.path.basename(file_name)
-
-    try:
-        response = s3_client.upload_file(file_name, object_name)
-    except ClientError as e:
-        logging.error(e)
-        return False
-    return True
 
 
 def s3_download_model(path: str, bucket_name, key_name: str):
@@ -134,11 +105,16 @@ def s3_download_model(path: str, bucket_name, key_name: str):
         return False
     return True
 
-def get_best_model_s3(best_model_path , key = "Best_model" ,  bucket_name="projectbirdclassifier" ):
-        key = "Best_model"
-        with open(best_model_path , "w") as file_path :
-                status= s3_download_model(path =str(best_model_path) , bucket_name=bucket_name ,key_name=key )
-                if not status:
-                    best_model_path= None
-        
-        return best_model_path
+
+def get_best_model_s3(
+    best_model_path, key="Best_model", bucket_name="projectbirdclassifier"
+):
+    key = "Best_model"
+    with open(best_model_path, "w") as file_path:
+        status = s3_download_model(
+            path=str(best_model_path), bucket_name=bucket_name, key_name=key
+        )
+        if not status:
+            best_model_path = None
+
+    return best_model_path

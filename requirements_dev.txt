@@ -13,6 +13,7 @@ joblib
 types-PyYAML
 scipy
 loguru 
+boto3
 -e .
 
 ## Dev requirements

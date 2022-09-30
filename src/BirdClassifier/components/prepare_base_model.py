@@ -27,7 +27,9 @@ class PrepareBaseModel:
             for layer in model.layers[:-freeze_till]:
                 model.trainable = False
 
-        flatten_in = tf.keras.layers.GlobalAveragePooling2D(name = "global_average_pooling_layer")(model.output)
+        flatten_in = tf.keras.layers.GlobalAveragePooling2D(
+            name="global_average_pooling_layer"
+        )(model.output)
         prediction = tf.keras.layers.Dense(units=classes, activation="softmax")(
             flatten_in
         )
